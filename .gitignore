@@ -4,3 +4,15 @@ out/
 gradle/
 gradlew
 gradlew.bat
+
+#Floobits
+.floo
+.flooignore
+
+#Java Bytecode
+.class
+
+#Jars
+.jar
+
+
