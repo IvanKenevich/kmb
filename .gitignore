@@ -15,4 +15,7 @@ gradlew.bat
 #Jars
 .jar
 
+#Build
+build
+
 
