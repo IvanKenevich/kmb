@@ -110,16 +110,8 @@ public class TruthTable extends JPanel{
 
     public void paintComponent(Graphics g) {
         g.setColor(Color.black);
-//                   LINE-BASED DRAWING OF THE TABLE (seems inferior, requires another loop to draw values)
-//        for (int i = 0; i<height; i++) // horizontal lines
-//            g.drawLine(tableOriginX, tableOriginY + (i * tableCellSize),
-//                       tableOriginX + tableCellSize * width, tableOriginY + (i * tableCellSize));
-//        for (int i = 0; i<=width; i++) // vertical lines
-//            g.drawLine(tableOriginX + (i* tableCellSize), tableOriginY,
-//                       tableOriginX + (i * tableCellSize), tableOriginY + tableCellSize * (height -1 ));
-        
-        
-//                                     RECTANGLE-BASED DRAWING OF THE TABLE 
+
+//                                     RECTANGLE-BASED DRAWING OF THE TABLE
         for (int col = 0; col < width; col++) {
             for (int row = 0; row < height; row++) {
                 g.drawRect(tableOriginX + col * tableCellSize,
