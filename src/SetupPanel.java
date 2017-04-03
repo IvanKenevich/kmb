@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Panel for the first window of the program.
@@ -162,10 +163,11 @@ public class SetupPanel extends JPanel {
     }
 
     private void setupListeners() {
-        generateButton.addActionListener((ActionEvent e) -> {
-            numInputs = Integer.parseInt(numInputsField.getText());
-            numOutputs = Integer.parseInt(numOutputsField.getText());
-            this.setVisible(false);
+        generateButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                numInputs = Integer.parseInt(numInputsField.getText());
+                numOutputs = Integer.parseInt(numOutputsField.getText());
+            }
         });
     }
 
