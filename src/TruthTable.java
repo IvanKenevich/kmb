@@ -13,8 +13,6 @@ public class TruthTable extends JPanel{
     private int textOffsetX, textOffsetY;
     private int textFieldOffsetX, textFieldOffsetY;
 
-    private  JTextField test,test2;
-
     private boolean[][] truthTable;
 
     public TruthTable (int variableCount, int outputCount) {
