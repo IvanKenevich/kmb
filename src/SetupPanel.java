@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
  * Panel for the first window of the program.
  * Asks user for the parameters of the truth table and
  * feeds these parameters to the next class.
+ *
  * @author Ivan Kenevich
  */
 public class SetupPanel extends JPanel {

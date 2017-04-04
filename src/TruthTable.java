@@ -1,57 +1,25 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class TruthTable extends JPanel{
-    private int numVars; // The number of 'switches' in the circuit
-    private int numOutputs; // Number of desirable outputs
-    private JTextField[][] outputs;
-    private int width, height;
+public class TruthTable {
+    public int numInputs; // The number of 'switches' in the circuit
+    public int numOutputs; // Number of desirable outputs
+    public int width, height;
 
-    private int tableOriginX, tableOriginY;
-    private int tableCellSize;
 
-    private int textOffsetX, textOffsetY;
-    private int textFieldOffsetX, textFieldOffsetY;
+    private boolean[][] table;
 
-    private boolean[][] truthTable;
+    public TruthTable(int numberOfInputs, int numberOfOutputs) {
+        numInputs = numberOfInputs;
+        numOutputs = numberOfOutputs;
 
-    public TruthTable (int variableCount, int outputCount) {
-        super(null);
-        numVars = variableCount;
-        numOutputs = outputCount;
+        width = numInputs + numOutputs;
+        height = (int) Math.pow(2, numInputs);
 
-        width = numVars + numOutputs;
-        height = (int) Math.pow(2,numVars);
-
-        tableOriginX = 10;
-        tableOriginY = 10;
-        tableCellSize = 30;
-
-        textOffsetX = (int) (tableCellSize / 2.5);
-        textOffsetY = (int) (tableCellSize / 1.5);
-
-        textFieldOffsetX = 2;
-        textFieldOffsetY = 2;
-
-        outputs = new JTextField[height][numOutputs];
-        truthTable = new boolean[height][width];
+        table = new boolean[height][width];
 
         populate();
         setOutputsToTrue();
-        repaint();
-        setupGUI();
-    }
-
-    private void setupGUI() {
-        for (int row = 0; row<height; row++) {
-            for (int col = 0; col<numOutputs; col++) {
-                outputs[row][col] = new JTextField("",1);
-                outputs[row][col].setSize(28,28);
-                outputs[row][col].setLocation(tableOriginX + (col + numVars) * tableCellSize + textFieldOffsetX,
-                        tableOriginY + row * tableCellSize + textFieldOffsetY);
-                this.add(outputs[row][col]);
-            }
-        }
     }
 
     /*
@@ -63,66 +31,49 @@ public class TruthTable extends JPanel{
     private void populate() {
         int switchingIndex, switchingIndexIncrement;
         boolean value;
-        for (int col = 0; col<numVars; col++) {
-            switchingIndexIncrement = (int) Math.pow(2,numVars-col-1);
+        for (int col = 0; col < numInputs; col++) {
+            switchingIndexIncrement = (int) Math.pow(2, numInputs - col - 1);
             switchingIndex = switchingIndexIncrement;
             value = false;
-            for (int row = 0; row<height; row++) {
+            for (int row = 0; row < height; row++) {
                 if (row == switchingIndex) {
                     value = !value;
                     switchingIndex += switchingIndexIncrement;
                 }
-                truthTable[row][col] = value;
+                table[row][col] = value;
             }
         }
     }
 
-    public boolean getOutput (int row, int col) {
-        return truthTable[row][col];
+    public boolean getValue(int row, int col) {
+        return table[row][col];
     }
-    public void setOutput (int row, int col, boolean value) {
-        truthTable[row][col] = value;
+
+    public void setValue(int row, int col, boolean value) {
+        table[row][col] = value;
     }
-    private void setOutputsToTrue (){
-        for (int col = numVars; col<width; col++) {
-            for (int row = 0; row<height; row++) {
-                truthTable[row][col] = true;
+
+    private void setOutputsToTrue() {
+        for (int col = numInputs; col < width; col++) {
+            for (int row = 0; row < height; row++) {
+                table[row][col] = true;
             }
         }
     }
 
     @Override
-    public String toString () {
+    public String toString() {
         String output = "";
-        for (int row = 0; row<height; row++) {
-            output+="\n";
+        for (int row = 0; row < height; row++) {
+            output += "\n";
             for (int col = 0; col < width; col++) {
-                if (truthTable[row][col])
-                    output+="1 ";
+                if (table[row][col])
+                    output += "1 ";
                 else
-                    output+="0 ";
+                    output += "0 ";
             }
         }
         return output;
     }
 
-    public void paintComponent(Graphics g) {
-        g.setColor(Color.black);
-
-//                                     RECTANGLE-BASED DRAWING OF THE TABLE
-        for (int col = 0; col < width; col++) {
-            for (int row = 0; row < height; row++) {
-                g.drawRect(tableOriginX + col * tableCellSize,
-                           tableOriginY + row * tableCellSize, tableCellSize, tableCellSize);
-                if (col<numVars) {
-                    if (truthTable[row][col])
-                        g.drawString("1", tableOriginX + col * tableCellSize + textOffsetX,
-                                tableOriginY + row * tableCellSize + textOffsetY);
-                    else
-                        g.drawString("0", tableOriginX + col * tableCellSize + textOffsetX,
-                                tableOriginY + row * tableCellSize + textOffsetY);
-                }
-            }
-        }
-    }
 }
